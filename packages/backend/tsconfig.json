@@ -4,13 +4,11 @@
     "rootDir": ".",
     "outDir": "dist",
     "types": [
-      "node",
-      "vitest/globals"
+      "node"
     ]
   },
   "include": [
     "src/**/*.ts",
-    "tests/**/*.ts",
     "knexfile.ts"
   ]
 }
