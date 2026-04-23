@@ -6,11 +6,13 @@ import { patientsRoutes } from "../modules/patients/patients.routes";
 import { providersRoutes } from "../modules/providers/providers.routes";
 import { proceduresRoutes } from "../modules/procedures/procedures.routes";
 import { reportsRoutes } from "../modules/reports/reports.routes";
+import { corsMiddleware } from "../common/middleware/cors-middleware";
 import { errorHandler } from "../common/middleware/error-handler";
 import { requestLogger } from "../common/middleware/request-logger";
 
 export const createApp = () => {
   const app = express();
+  app.use(corsMiddleware);
   app.use(express.json());
   app.use(requestLogger);
 

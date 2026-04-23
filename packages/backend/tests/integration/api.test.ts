@@ -44,6 +44,30 @@ describe("FDCDF API", () => {
     expect(authenticated.body.success).toBe(true);
   });
 
+  it("allows CORS for the frontend origins", async () => {
+    const preflight = await request(app)
+      .options("/api/v1/auth/login")
+      .set("Origin", "http://localhost:5173")
+      .set("Access-Control-Request-Method", "POST")
+      .set("Access-Control-Request-Headers", "Authorization, Content-Type");
+
+    expect(preflight.status).toBe(204);
+    expect(preflight.headers["access-control-allow-origin"]).toBe("http://localhost:5173");
+    expect(preflight.headers["access-control-allow-methods"]).toContain("POST");
+    expect(preflight.headers["access-control-allow-headers"]).toContain("Authorization");
+
+    const netlifyRequest = await request(app)
+      .post("/api/v1/auth/login")
+      .set("Origin", "https://fdcdf.netlify.app")
+      .send({
+        email: "analyst@fdcdf.local",
+        password: "Password123!"
+      });
+
+    expect(netlifyRequest.status).toBe(200);
+    expect(netlifyRequest.headers["access-control-allow-origin"]).toBe("https://fdcdf.netlify.app");
+  });
+
   it("lists patients, providers, and procedures for the frontend", async () => {
     const token = await login();
 
