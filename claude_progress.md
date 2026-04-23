@@ -66,6 +66,11 @@ Backend (`packages/backend/`) is owned by another track; this session only consu
     - Verified: `npm run build` succeeds in 2.23s (210 modules); `npx vitest run` → 68/68 green; `npm run typecheck` surfaces exactly the 5 pre-existing errors previously flagged (`useApi.ts` × 2, `AppCombobox.vue` × 2, `AppDataTable.vue` × 1) and nothing new.
     - Trade-off: Netlify deploys no longer block on TS errors. Typecheck remains available as a CI/local script. Pre-existing errors are candidate for a dedicated cleanup pass.
 
+13. **Shared package build wired into frontend build**
+    - After fix (12), Netlify then failed with `[commonjs--resolver] Failed to resolve entry for package "@fdcdf/shared"` because `@fdcdf/shared/dist/` doesn't exist on a clean Netlify install — the UI command only invokes `npm --workspace @fdcdf/frontend run build`, so shared's tsc build never ran. Locally it worked because `dist/` was left behind from an earlier manual build.
+    - Fix: `packages/frontend/package.json` build is now `npm run build --workspace=@fdcdf/shared && vite build`. npm workspace resolution walks up to the root from inside `packages/frontend`, so the cross-workspace call works without changing Netlify's UI-configured command.
+    - Verified: deleted both `packages/shared/dist` and `packages/frontend/dist`, ran `npm run build` from `packages/frontend` — shared's tsc compiles first, then vite build succeeds in ~1.8s.
+
 ## Session summary (2026-04-19)
 
 **Shipped this session:**
