@@ -1,0 +1,51 @@
+export enum UserRole {
+  ADMIN = "ADMIN",
+  ANALYST = "ANALYST",
+  INVESTIGATOR = "INVESTIGATOR",
+  RULES_ADMIN = "RULES_ADMIN"
+}
+
+export enum ClaimStatus {
+  ACCEPTED = "ACCEPTED",
+  ACCEPTED_WITH_WARNINGS = "ACCEPTED_WITH_WARNINGS",
+  REJECTED = "REJECTED"
+}
+
+export enum RuleSeverity {
+  LOW = "LOW",
+  MEDIUM = "MEDIUM",
+  HIGH = "HIGH",
+  CRITICAL = "CRITICAL"
+}
+
+export enum RiskBand {
+  LOW = "LOW",
+  MEDIUM = "MEDIUM",
+  HIGH = "HIGH",
+  CRITICAL = "CRITICAL"
+}
+
+export enum AlertStatus {
+  OPEN = "OPEN",
+  ACKNOWLEDGED = "ACKNOWLEDGED",
+  CLOSED = "CLOSED"
+}
+
+export enum ToothDentitionType {
+  PRIMARY = "PRIMARY",
+  PERMANENT = "PERMANENT"
+}
+
+export enum LineDecision {
+  LEGITIMATE = "LEGITIMATE",
+  EDUCATION_REQUIRED = "EDUCATION_REQUIRED",
+  CONFIRMED_FRAUD = "CONFIRMED_FRAUD"
+}
+
+export enum ResolutionStatus {
+  PENDING_REVIEW = "PENDING_REVIEW",
+  IN_REVIEW = "IN_REVIEW",
+  CLEARED = "CLEARED",
+  EDUCATION_FLAGGED = "EDUCATION_FLAGGED",
+  CONFIRMED_FRAUD = "CONFIRMED_FRAUD"
+}

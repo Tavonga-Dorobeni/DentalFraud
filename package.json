@@ -1,0 +1,13 @@
+{
+  "name": "fdcdf",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces",
+    "test:backend": "npm run test --workspace @fdcdf/backend"
+  }
+}

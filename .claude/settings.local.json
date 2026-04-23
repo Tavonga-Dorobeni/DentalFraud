@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npx --workspace @fdcdf/frontend vite build)",
+      "Bash(npx:*)",
+      "Bash(npm run:*)",
+      "Bash(DB_CLIENT=sqlite3 SQLITE_FILENAME=./dev.sqlite3 npx knex migrate:latest --knexfile knexfile.ts)",
+      "Bash(DB_CLIENT=sqlite3 SQLITE_FILENAME=./dev.sqlite3 npx tsx node_modules/.bin/knex migrate:latest --knexfile knexfile.ts)",
+      "Bash(DB_CLIENT=sqlite3 SQLITE_FILENAME=./dev.sqlite3 npx knex migrate:latest --knexfile ./dist/knexfile.js)",
+      "Bash(ls dist/knexfile*)",
+      "Bash(DB_CLIENT=sqlite3 SQLITE_FILENAME=./dev.sqlite3 npx knex seed:run --knexfile ./dist/knexfile.js)",
+      "Bash(DB_CLIENT=sqlite3 SQLITE_FILENAME=./dev.sqlite3 node dist/server.js)",
+      "Bash(DB_CLIENT=sqlite3 SQLITE_FILENAME=./dev.sqlite3 node dist/src/server.js)",
+      "Bash(curl:*)",
+      "Bash(taskkill //F //IM \"node.exe\")",
+      "Bash(DB_CLIENT=sqlite3 SQLITE_FILENAME=C:/Projects/DentalFraudDetection/packages/backend/dev.sqlite3 node dist/src/server.js)",
+      "Bash(node -e \"const jwt = require\\('jsonwebtoken'\\); console.log\\('jwt version:', require\\('jsonwebtoken/package.json'\\).version\\); try { const t = jwt.sign\\({id:'x'}, 'secret', {expiresIn:'15m'}\\); console.log\\('sign works:', t.substring\\(0,20\\)+'...'\\); } catch\\(e\\) { console.log\\('sign error:', e.message\\); }\")",
+      "Bash(node -e ':*)",
+      "Bash(rm C:/Projects/DentalFraudDetection/packages/backend/dev.sqlite3)",
+      "Bash(DB_CLIENT=sqlite3 SQLITE_FILENAME=C:/Projects/DentalFraudDetection/packages/backend/dev.sqlite3 npx knex migrate:latest --knexfile ./dist/knexfile.js)",
+      "Bash(DB_CLIENT=sqlite3 SQLITE_FILENAME=C:/Projects/DentalFraudDetection/packages/backend/dev.sqlite3 npx knex seed:run --knexfile ./dist/knexfile.js)",
+      "Bash(ls tsconfig*.json)",
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "mcp__plugin_playwright_playwright__browser_snapshot",
+      "mcp__plugin_playwright_playwright__browser_fill_form",
+      "mcp__plugin_playwright_playwright__browser_click",
+      "mcp__plugin_playwright_playwright__browser_wait_for",
+      "mcp__plugin_playwright_playwright__browser_take_screenshot",
+      "Bash(node -e \"require.resolve\\('chart.js'\\); require.resolve\\('vue-chartjs'\\); console.log\\('ok'\\);\")",
+      "Bash(npm test *)",
+      "Bash(netstat -ano)",
+      "Bash(taskkill //F //FI \"PID eq $\\(netstat -ano)",
+      "Bash(awk '{print $5}')"
+    ]
+  }
+}
