@@ -1,14 +1,30 @@
+import fs from "fs";
 import knex, { Knex } from "knex";
+import path from "path";
 import { env } from "../config/env";
 
 let dbInstance: Knex | null = null;
+
+const resolveSqliteFilename = (): string => {
+  if (env.SQLITE_FILENAME === ":memory:") {
+    return env.SQLITE_FILENAME;
+  }
+
+  const filename = path.isAbsolute(env.SQLITE_FILENAME)
+    ? env.SQLITE_FILENAME
+    : path.resolve(process.cwd(), env.SQLITE_FILENAME);
+
+  fs.mkdirSync(path.dirname(filename), { recursive: true });
+
+  return filename;
+};
 
 export const createKnexConfig = (): Knex.Config => {
   if (env.DB_CLIENT === "sqlite3") {
     return {
       client: "sqlite3",
       connection: {
-        filename: env.SQLITE_FILENAME
+        filename: resolveSqliteFilename()
       },
       useNullAsDefault: true
     };
