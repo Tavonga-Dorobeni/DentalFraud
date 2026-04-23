@@ -48,9 +48,10 @@ api.interceptors.response.use(
       const refreshToken = localStorage.getItem("fdcdf_refresh_token");
       if (refreshToken) {
         try {
-          const refreshResponse = await axios.post("/api/v1/auth/refresh", {
-            refreshToken,
-          });
+          const refreshResponse = await axios.post(
+            `${import.meta.env.VITE_API_BASE_URL || ""}/api/v1/auth/refresh`,
+            { refreshToken }
+          );
 
           const data = refreshResponse.data?.data ?? refreshResponse.data;
           setAccessToken(data.accessToken);

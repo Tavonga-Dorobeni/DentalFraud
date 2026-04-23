@@ -71,6 +71,12 @@ Backend (`packages/backend/`) is owned by another track; this session only consu
     - Fix: `packages/frontend/package.json` build is now `npm run build --workspace=@fdcdf/shared && vite build`. npm workspace resolution walks up to the root from inside `packages/frontend`, so the cross-workspace call works without changing Netlify's UI-configured command.
     - Verified: deleted both `packages/shared/dist` and `packages/frontend/dist`, ran `npm run build` from `packages/frontend` — shared's tsc compiles first, then vite build succeeds in ~1.8s.
 
+14. **Production API base URL wired to Render**
+    - New `packages/frontend/.env.production` sets `VITE_API_BASE_URL=https://dentalfraud-kpsv.onrender.com`. Vite auto-loads this during `vite build` (production only), so the URL is baked into the bundle — no Netlify UI env config required. Local `npm run dev` is unaffected (still uses `vite.config.ts` `server.proxy` → `localhost:3000`).
+    - Fixed pre-existing bug in `src/composables/useApi.ts`: the 401 refresh handler called raw `axios.post("/api/v1/auth/refresh", …)` with a relative URL, which would POST to the Netlify domain instead of the backend in production. Now prefixes `import.meta.env.VITE_API_BASE_URL` while still bypassing the `api` instance's response interceptor (to avoid recursion on refresh failure).
+    - Verified: `grep dentalfraud-kpsv dist/assets/*.js` shows the URL in the output bundle; 68/68 tests green.
+    - Backend CORS caveat: the Render backend must allow the Netlify origin (`Access-Control-Allow-Origin`) for login/refresh/API calls to succeed from the browser. Out of scope for frontend — flag to backend track if CORS blocks prod requests.
+
 ## Session summary (2026-04-19)
 
 **Shipped this session:**
