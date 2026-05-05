@@ -18,11 +18,11 @@ describe("repository flows", () => {
   it("finds exact and near duplicates using patient plus procedure/tooth signature", async () => {
     await createClaim({
       externalClaimId: "CLAIM-1",
-      patientExternalId: "PAT-001",
-      patientName: "Seed Patient",
+      patientExternalId: "PAT-UNIT-1",
+      patientName: "Repository Test Patient",
       patientDateOfBirth: "1990-01-01T00:00:00.000Z",
-      providerExternalId: "PROV-001",
-      providerName: "Seed Provider",
+      providerExternalId: "PROV-UNIT-1",
+      providerName: "Repository Test Provider",
       providerSpecialty: "General Dentistry",
       dateOfService: "2026-04-01T00:00:00.000Z",
       submissionDate: "2026-04-02T00:00:00.000Z",
@@ -37,11 +37,11 @@ describe("repository flows", () => {
 
     const exactDuplicate = await findExactDuplicate({
       externalClaimId: "CLAIM-2",
-      patientExternalId: "PAT-001",
-      patientName: "Seed Patient",
+      patientExternalId: "PAT-UNIT-1",
+      patientName: "Repository Test Patient",
       patientDateOfBirth: "1990-01-01T00:00:00.000Z",
-      providerExternalId: "PROV-001",
-      providerName: "Seed Provider",
+      providerExternalId: "PROV-UNIT-1",
+      providerName: "Repository Test Provider",
       providerSpecialty: "General Dentistry",
       dateOfService: "2026-04-01T00:00:00.000Z",
       submissionDate: "2026-04-02T00:00:00.000Z",
@@ -56,10 +56,10 @@ describe("repository flows", () => {
 
     const nearDuplicate = await findNearDuplicate({
       externalClaimId: "CLAIM-3",
-      patientExternalId: "PAT-001",
-      patientName: "Seed Patient",
+      patientExternalId: "PAT-UNIT-1",
+      patientName: "Repository Test Patient",
       patientDateOfBirth: "1990-01-01T00:00:00.000Z",
-      providerExternalId: "PROV-002",
+      providerExternalId: "PROV-UNIT-2",
       providerName: "Different Provider",
       providerSpecialty: "General Dentistry",
       dateOfService: "2026-04-04T00:00:00.000Z",
@@ -75,8 +75,8 @@ describe("repository flows", () => {
 
     expect(exactDuplicate).toBeTruthy();
     expect(nearDuplicate).toBeTruthy();
-    expect(exactDuplicate?.provider_external_id).toBe("PROV-001");
-    expect(nearDuplicate?.provider_external_id).toBe("PROV-001");
+    expect(exactDuplicate?.provider_external_id).toBe("PROV-UNIT-1");
+    expect(nearDuplicate?.provider_external_id).toBe("PROV-UNIT-1");
   });
 
   it("updates alert state in persistence", async () => {

@@ -8,6 +8,11 @@ interface SeedClaimLine {
   procedureCode: string;
   claimedAmount: number;
   toothNumber?: number;
+  documentedProcedureCode?: string;
+  evidenceSummary?: string;
+  chartNotes?: string;
+  radiographReference?: string;
+  treatmentPlanReference?: string;
 }
 
 interface SeedClaim {
@@ -123,8 +128,7 @@ const createLineSignature = (lines: SeedClaimLine[]) =>
     [...lines]
       .map((line) => ({
         procedureCode: line.procedureCode,
-        toothNumber: line.toothNumber ?? null,
-        claimedAmount: line.claimedAmount
+        toothNumber: line.toothNumber ?? null
       }))
       .sort((left, right) =>
         `${left.procedureCode}${left.toothNumber}`.localeCompare(
@@ -364,6 +368,95 @@ const seededClaims: SeedClaim[] = [
       { id: "cline_seed_22", procedureCode: "D0220", claimedAmount: 20, toothNumber: 26 },
       { id: "cline_seed_23", procedureCode: "D2140", claimedAmount: 125, toothNumber: 26 }
     ]
+  },
+  {
+    id: "claim_seed_21",
+    externalClaimId: "CLM-2026-0021",
+    patientId: "patient_vimbai_gutu",
+    patientExternalId: "PAT-00147",
+    providerId: "provider_lorraine_moyo",
+    providerExternalId: "PRV-1380",
+    dateOfService: "2026-04-21",
+    submissionDate: "2026-04-22",
+    duplicateOfClaimId: "claim_seed_8",
+    warnings: ["Potential near-duplicate claim detected"],
+    lines: [
+      {
+        id: "cline_seed_24",
+        procedureCode: "D2140",
+        claimedAmount: 120,
+        toothNumber: 46,
+        documentedProcedureCode: "D2140"
+      }
+    ]
+  },
+  {
+    id: "claim_seed_22",
+    externalClaimId: "CLM-2026-0022",
+    patientId: "patient_chiedza_bvuma",
+    patientExternalId: "PAT-00158",
+    providerId: "provider_anotida_mupfumi",
+    providerExternalId: "PRV-1250",
+    dateOfService: "2026-04-24",
+    submissionDate: "2026-04-25",
+    lines: [{ id: "cline_seed_25", procedureCode: "D2740", claimedAmount: 450, toothNumber: 24 }]
+  },
+  {
+    id: "claim_seed_23",
+    externalClaimId: "CLM-2026-0023",
+    patientId: "patient_panashe_sibanda",
+    patientExternalId: "PAT-00133",
+    providerId: "provider_tatenda_gono",
+    providerExternalId: "PRV-1221",
+    dateOfService: "2026-04-27",
+    submissionDate: "2026-04-28",
+    lines: [
+      {
+        id: "cline_seed_26",
+        procedureCode: "D2740",
+        documentedProcedureCode: "D2140",
+        claimedAmount: 450,
+        toothNumber: 22
+      }
+    ]
+  },
+  {
+    id: "claim_seed_24",
+    externalClaimId: "CLM-2026-0024",
+    patientId: "patient_tafadzwa_moyo",
+    patientExternalId: "PAT-001",
+    providerId: "provider_anotida_mupfumi",
+    providerExternalId: "PRV-1250",
+    dateOfService: "2026-04-29",
+    submissionDate: "2026-04-30",
+    lines: [
+      {
+        id: "cline_seed_27",
+        procedureCode: "D2140",
+        claimedAmount: 150,
+        toothNumber: 46,
+        chartNotes: "Restorative treatment documented"
+      }
+    ]
+  },
+  {
+    id: "claim_seed_25",
+    externalClaimId: "CLM-2026-0025",
+    patientId: "patient_tafadzwa_moyo",
+    patientExternalId: "PAT-001",
+    providerId: "provider_chiedza_ncube",
+    providerExternalId: "PRV-1236",
+    dateOfService: "2026-04-18",
+    submissionDate: "2026-04-19",
+    lines: [
+      {
+        id: "cline_seed_28",
+        procedureCode: "D2140",
+        documentedProcedureCode: "D2140",
+        claimedAmount: 125,
+        toothNumber: 26
+      }
+    ]
   }
 ];
 
@@ -547,11 +640,11 @@ export async function seed(knex: Knex): Promise<void> {
         procedure_code: line.procedureCode,
         claimed_amount: line.claimedAmount,
         tooth_number: line.toothNumber ?? null,
-        documented_procedure_code: null,
-        evidence_summary: null,
-        chart_notes: null,
-        radiograph_reference: null,
-        treatment_plan_reference: null,
+        documented_procedure_code: line.documentedProcedureCode ?? null,
+        evidence_summary: line.evidenceSummary ?? null,
+        chart_notes: line.chartNotes ?? null,
+        radiograph_reference: line.radiographReference ?? null,
+        treatment_plan_reference: line.treatmentPlanReference ?? null,
         created_at: now,
         updated_at: now
       }))
