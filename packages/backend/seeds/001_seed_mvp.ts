@@ -430,7 +430,7 @@ export async function seed(knex: Knex): Promise<void> {
       id: "rule_exact_duplicate",
       rule_code: "EXACT_DUPLICATE",
       name: "Exact Duplicate Claim",
-      severity: "HIGH",
+      severity: "CRITICAL",
       enabled: true,
       parameters_json: JSON.stringify({}),
       description: "Detect exact duplicate claims",
