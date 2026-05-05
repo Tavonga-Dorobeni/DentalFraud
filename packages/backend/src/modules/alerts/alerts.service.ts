@@ -29,12 +29,8 @@ export const createAlertsFromRuleResults = async (
   ruleResults: RuleResultDto[],
   userId?: string
 ): Promise<AlertDto[]> => {
-  const severeResults = ruleResults.filter(
-    (result) => result.severity === RuleSeverity.HIGH || result.severity === RuleSeverity.CRITICAL
-  );
-
   const persisted = await repository.createAlerts(
-    severeResults.map((result) => ({
+    ruleResults.map((result) => ({
       claimId,
       claimLineId: result.claimLineId,
       severity: result.severity,
